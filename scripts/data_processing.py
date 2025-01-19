@@ -63,3 +63,8 @@ def unit_test():
     #print(features)
     #print(diagnosis)
     print("test completed") #no large errors found if you see this message after running test
+
+
+if __name__ == '__main__':
+    unit_test()
+    
