@@ -2,8 +2,11 @@
 File: data_processing.ipynb
 Author: Jourdan Hourican, Lenna Wolffe, Madison Tarasuik, John Beliveau
 Date: 2024-01-15
-Purpose: Import data, clean data by replacing any missing values with the mean of the data,
- and extract features and target for analysis.
+Purpose: Utilizing the UC Irvine database on heart disease, this script will import data, clean data by replacing any missing values with the mean value,
+ extract features and target data, and perform a cluster analysis to answer/analyze two questions: 
+ 1. Are there specific combinations of risk factors that form clusters in this dataset?
+ 2. Can we identify clusters based on clinical measurements (ex. cholesterol levels, 
+ resting blood pressure, maximum heart rate) and their association with heart disease?
 '''
 
 #install ucimlrepo package
