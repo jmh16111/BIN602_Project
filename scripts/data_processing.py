@@ -1,8 +1,8 @@
 '''
 File: data_processing.ipynb
-Author: Jourdan Hourican, Lenna Wolffe
+Author: Jourdan Hourican, Lenna Wolffe, Madison Tarasuik, John Beliveau
 Date: 2024-01-15
-Purpose: Import data, clean data by removing any missing values
+Purpose: Import data, clean data by replacing any missing values with the mean of the data,
  and extract features and target for analysis.
 '''
 
@@ -10,6 +10,10 @@ Purpose: Import data, clean data by removing any missing values
 #pip install ucimlrepo
 import pandas as pd
 from ucimlrepo import fetch_ucirepo
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+
 
 """
 In this paper they used these 14 attributes:
@@ -49,8 +53,30 @@ def Dataframe_targets(heart_disease): #identify target (number of diagnoses of m
     diagnosis = heart_disease.data.targets
     return diagnosis
 
-def Replace_Empty_Values(data): #Handle missing values by filling with "NA"
-    return data.fillna("NA")
+def Replace_Empty_Values(data): #Handle missing values by filling with mean of the data
+    return data.fillna(data.mean())
+
+def Perform_KMeans_Clustering(features, n_clusters=3): # functiong for K-means clustering analysis
+    # performs K-means clustering on feature data. Scales the data for consistent clustering and uses K-means to group data into clusters
+    # features : pandas dataframe containing feature data
+    # n_clusters : number of clusters to form ( 3 is the default)
+    # returns cluster_labels: array of cluster labels for data points
+
+    # scale data to standardize feature values
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(features)
+    # initializing K-means algorithm
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+    cluster_labels = kmeans.fit_predict(scaled_features)
+    return cluster_labels
+
+# creating function to interpret/analyze clustering 
+def Analyze_Clusters(features, cluster_labels):
+    # adds cluster labels to feature data fram and prints statistics for each cluster
+    features['Cluster'] = cluster_labels # adding cluster labels as a column to features dataframe 
+    cluster_summary = features.groupby('Cluster').mean() # grouping by clusters and calculating statistics 
+    print("/nCluster Summary Statistics:")
+    print(cluster_summary)
 
 def unit_test():
     #Calling functions to test import, extraction, and clean up of UCI Heart Disease Data
@@ -63,8 +89,13 @@ def unit_test():
     #print(features)
     #print(diagnosis)
     print("test completed") #no large errors found if you see this message after running test
+    print("/nPerfomring K-means Clustering")
+    cluster_labels = Perform_KMeans_Clustering(features, n_clusters=3)
+    print("/nAnalyzing Clustering Results")
+    Analyze_Clusters(features, cluster_labels)
+    print("/nUnit test completed.")
 
 
 if __name__ == '__main__':
     unit_test()
-    
+
