@@ -28,8 +28,15 @@
   
     #metadata 
     print(heart_disease.metadata) 
-  
-    #variable information 
-    print(heart_disease.variables)
+
+# Preprocessing data:
+    Use python script "data_processing.py" in order to import data, clean data by replacing any missing values with the mean value, extract features and target data, and perform a cluster analysis.
+
+# Analysis:
+    Use notebook "data_analysis.ipynb" to import the cleaned dataset and run the clustering analysis in order to answer key research questions.
+
+
+# Project Insights:
+    By running the clustering scipt we can identify clusters based on clinical measurements, and doing so seems to provide further insight into the heart disease association. For example, Cluster 0 seems to have more severe cardiovascular symptoms and risk factors, while Cluster 1 has better cardiovascular fitness and lower risk factors.
 
     
